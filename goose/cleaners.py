@@ -37,18 +37,18 @@ class DocumentCleaner(object):
 
         # nodes to remove regexp
         self.remove_nodes_re = (
-        "^side$|combx|retweet|mediaarticlerelated|menucontainer|"
-        "navbar|storytopbar-bucket|utility-bar|inline-share-tools"
-        "|comment|PopularQuestions|contact|foot|footer|Footer|footnote"
-        "|cnn_strycaptiontxt|cnn_html_slideshow|cnn_strylftcntnt"
-        "|^links$|meta$|shoutbox|sponsor"
-        "|tags|socialnetworking|socialNetworking|cnnStryHghLght"
-        "|cnn_stryspcvbx|^inset$|pagetools|post-attributes"
-        "|welcome_form|contentTools2|the_answers"
-        "|communitypromo|runaroundLeft|subscribe|vcard|articleheadings"
-        "|date|^print$|popup|author-dropdown|tools|socialtools|byline"
-        "|konafilter|KonaFilter|breadcrumbs|^fn$|wp-caption-text"
-        "|legende|ajoutVideo|timestamp|js_replies"
+            "^side$|combx|retweet|mediaarticlerelated|menucontainer|"
+            "navbar|storytopbar-bucket|utility-bar|inline-share-tools"
+            "|comment|PopularQuestions|contact|foot|footer|Footer|footnote"
+            "|cnn_strycaptiontxt|cnn_html_slideshow|cnn_strylftcntnt"
+            "|^links$|meta$|shoutbox|sponsor"
+            "|tags|socialnetworking|socialNetworking|cnnStryHghLght"
+            "|cnn_stryspcvbx|^inset$|pagetools|post-attributes"
+            "|welcome_form|contentTools2|the_answers"
+            "|communitypromo|runaroundLeft|subscribe|vcard|articleheadings"
+            "|date|^print$|popup|author-dropdown|tools|socialtools|byline"
+            "|konafilter|KonaFilter|breadcrumbs|^fn$|wp-caption-text"
+            "|legende|ajoutVideo|timestamp|js_replies"
         )
         self.regexp_namespace = "http://exslt.org/regular-expressions"
         self.nauthy_ids_re = "//*[re:test(@id, '%s', 'i')]" % self.remove_nodes_re
@@ -220,7 +220,7 @@ class DocumentCleaner(object):
                 nodes_to_return.append(kid)
 
         # flush out anything still remaining
-        if(len(replacement_text) > 0):
+        if len(replacement_text) > 0:
             new_node = self.get_flushed_buffer(''.join(replacement_text), doc)
             nodes_to_return.append(new_node)
             replacement_text = []

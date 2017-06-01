@@ -115,7 +115,6 @@ class Crawler(object):
 
         # raw html
         raw_html = self.get_html(crawl_candidate, parse_candidate)
-
         if raw_html is None:
             return self.article
 

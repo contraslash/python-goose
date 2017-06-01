@@ -89,7 +89,7 @@ def force_unicode(s, encoding='utf-8', strings_only=False, errors='strict'):
             # errors), so that if s is a SafeString, it ends up being a
             # SafeUnicode at the end.
             s = s.decode(encoding, errors)
-    except UnicodeDecodeError, e:
+    except UnicodeDecodeError as e:
         if not isinstance(s, Exception):
             raise DjangoUnicodeDecodeError(s, *e.args)
         else:
@@ -113,7 +113,7 @@ def smart_str(s, encoding='utf-8', strings_only=False, errors='strict'):
         return s
     # if isinstance(s, Promise):
     #     return unicode(s).encode(encoding, errors)
-    if not isinstance(s, basestring):
+    if not isinstance(s, (str, bytes)):
         try:
             return str(s)
         except UnicodeEncodeError:
@@ -123,8 +123,8 @@ def smart_str(s, encoding='utf-8', strings_only=False, errors='strict'):
                 # further exception.
                 return ' '.join([smart_str(arg, encoding, strings_only,
                         errors) for arg in s])
-            return unicode(s).encode(encoding, errors)
-    elif isinstance(s, unicode):
+            return str(s).encode(encoding, errors)
+    elif isinstance(s, str):
         return s.encode(encoding, errors)
     elif s and encoding != 'utf-8':
         return s.decode('utf-8', errors).encode(encoding, errors)

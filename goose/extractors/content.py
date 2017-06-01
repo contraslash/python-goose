@@ -94,7 +94,7 @@ class ContentExtractor(BaseExtractor):
         for node in nodes_with_text:
             boost_score = float(0)
             # boost
-            if(self.is_boostable(node)):
+            if self.is_boostable(node):
                 if cnt >= 0:
                     boost_score = float((1.0 / starting_boost) * 50)
                     starting_boost += 1
@@ -163,8 +163,8 @@ class ContentExtractor(BaseExtractor):
             if current_node_tag == para:
                 if steps_away >= max_stepsaway_from_node:
                     return False
-                paraText = self.parser.getText(current_node)
-                word_stats = self.stopwords_class(language=self.get_language()).get_stopword_count(paraText)
+                para_text = self.parser.getText(current_node)
+                word_stats = self.stopwords_class(language=self.get_language()).get_stopword_count(para_text)
                 if word_stats.get_stopword_count() > minimum_stopword_count:
                     return True
                 steps_away += 1
@@ -175,8 +175,8 @@ class ContentExtractor(BaseExtractor):
         b = []
         while current_sibling is not None:
             b.append(current_sibling)
-            previousSibling = self.parser.previousSibling(current_sibling)
-            current_sibling = None if previousSibling is None else previousSibling
+            previous_sibling = self.parser.previousSibling(current_sibling)
+            current_sibling = None if previous_sibling is None else previous_sibling
         return b
 
     def add_siblings(self, top_node):
@@ -249,7 +249,7 @@ class ContentExtractor(BaseExtractor):
 
         return base
 
-    def update_score(self, node, addToScore):
+    def update_score(self, node, add_to_score):
         """\
         adds a score to the gravityScore Attribute we put on divs
         we'll get the current score then add the score
@@ -258,9 +258,10 @@ class ContentExtractor(BaseExtractor):
         current_score = 0
         score_string = self.parser.getAttribute(node, 'gravityScore')
         if score_string:
-            current_score = int(score_string)
 
-        new_score = current_score + addToScore
+            current_score = float(score_string)
+
+        new_score = current_score + add_to_score
         self.parser.setAttribute(node, "gravityScore", str(new_score))
 
     def update_node_count(self, node, add_to_count):
@@ -270,7 +271,7 @@ class ContentExtractor(BaseExtractor):
         current_score = 0
         count_string = self.parser.getAttribute(node, 'gravityNodes')
         if count_string:
-            current_score = int(count_string)
+            current_score = float(count_string)
 
         new_score = current_score + add_to_count
         self.parser.setAttribute(node, "gravityNodes", str(new_score))
@@ -292,12 +293,12 @@ class ContentExtractor(BaseExtractor):
         for link in links:
             sb.append(self.parser.getText(link))
 
-        linkText = ''.join(sb)
-        linkWords = linkText.split(' ')
-        numberOfLinkWords = float(len(linkWords))
-        numberOfLinks = float(len(links))
-        linkDivisor = float(numberOfLinkWords / words_number)
-        score = float(linkDivisor * numberOfLinks)
+        link_text = ''.join(sb)
+        link_words = link_text.split(' ')
+        number_of_link_words = float(len(link_words))
+        number_of_links = float(len(links))
+        link_divisor = float(number_of_link_words / words_number)
+        score = float(link_divisor * number_of_links)
         if score >= 1.0:
             return True
         return False
@@ -310,10 +311,10 @@ class ContentExtractor(BaseExtractor):
         return self.get_node_gravity_score(node) or 0
 
     def get_node_gravity_score(self, node):
-        grvScoreString = self.parser.getAttribute(node, 'gravityScore')
-        if not grvScoreString:
+        grv_score_string = self.parser.getAttribute(node, 'gravityScore')
+        if not grv_score_string:
             return None
-        return int(grvScoreString)
+        return float(grv_score_string)
 
     def nodes_to_check(self, doc):
         """\

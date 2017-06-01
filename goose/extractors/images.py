@@ -23,7 +23,7 @@ limitations under the License.
 import re
 import os
 
-from urlparse import urlparse, urljoin
+from urllib.parse import urlparse, urljoin
 
 from goose.extractors import BaseExtractor
 from goose.image import Image
@@ -117,8 +117,11 @@ class ImageExtractor(BaseExtractor):
         if good_images:
             scored_images = self.fetch_images(good_images, parent_depth_level)
             if scored_images:
-                highscore_image = sorted(scored_images.items(),
-                                        key=lambda x: x[1], reverse=True)[0][0]
+                highscore_image = sorted(
+                    scored_images.items(),
+                    key=lambda x: x[1],
+                    reverse=True
+                )[0][0]
                 main_image = Image()
                 main_image.src = highscore_image.src
                 main_image.width = highscore_image.width

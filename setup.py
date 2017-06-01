@@ -53,7 +53,8 @@ try:
 except Exception:
     long_description = description
 
-setup(name='goose-extractor',
+setup(
+    name='goose-extractor',
     version=version.__version__,
     description=description,
     long_description=long_description,
@@ -66,6 +67,6 @@ setup(name='goose-extractor',
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    install_requires=['Pillow', 'lxml', 'cssselect', 'jieba', 'beautifulsoup', 'nltk'],
+    install_requires=['Pillow', 'lxml', 'cssselect', 'jieba', 'beautifulsoup4', 'nltk'],
     test_suite="tests"
 )
